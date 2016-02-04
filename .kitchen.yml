@@ -19,6 +19,7 @@ platforms:
 suites:
   - name: default
     run_list:
+      - recipe[btc-infrastructure::default]
       - recipe[btc-infrastructure::couchdb]
     attributes:
       admin_users:
