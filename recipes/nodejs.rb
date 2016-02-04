@@ -11,8 +11,8 @@ installers = node['installers']['dir']
 node_url = node['nodejs']['url']
 node_msi = node['nodejs']['msi']
 
-git_url = node.git.url.(node.git.version)
-git_exe = node.git.exe.(node.git.version)
+git_url = node['git']['url']
+git_exe = node['git']['exe']
 
 remote_file "#{installers}/#{git_exe}" do
   source "#{git_url}/#{git_exe}"
@@ -21,11 +21,15 @@ remote_file "#{installers}/#{git_exe}" do
 end
 
 powershell_script 'install-git' do
+  # code <<-EOH
+    # "#{installers}/#{git_exe} /SP /SILENT /NORESTART"
+	# [Environment]::SetEnvironmentVariable("Path", $env:Path + ";C:/Program Files/Git/bin", [EnvironmentVariableTarget]::Machine)
+  # EOH
   code <<-EOH
-    "#{installers}/#{git_exe} /SP /SILENT /NORESTART"
-	[Environment]::SetEnvironmentVariable("Path", $env:Path + ";C:/Program Files/Git/bin", [EnvironmentVariableTarget]::Machine)
+    #{installers}/#{git_exe} /SP /SILENT /NORESTART
   EOH
   action :run
+  not_if "Test-Path C:\\Program Files\\Git"
 end
 
 remote_file "#{installers}/#{node_msi}" do
