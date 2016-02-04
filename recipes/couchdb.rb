@@ -12,8 +12,9 @@ end
 
 home = node.couchdb.home
 
-powershell_script 'install-couchdb' do
-  code "#{node.installers.dir}/#{exe} /SP /SILENT /NORESTART /DIR='#{home}' /TASKS='service'"
+powershell_script 'install_couchdb' do
+  # code "#{node.installers.dir}/#{exe} /SP /SILENT /NORESTART /DIR='#{home}'"
+  code "#{node.installers.dir}/#{exe} /SP /SILENT /NORESTART /DIR='#{home}' /TASKS=''"
   action :run
   not_if "Test-Path #{home}"
 end
@@ -30,14 +31,23 @@ netsh_firewall_rule 'Apache CouchDB' do
   protocol :tcp
 end
 
-powershell_script 'start-couchdb' do
+powershell_script 'install_couchdb_service' do
   code <<-EOH
-    net.exe start 'Apache CouchDB'
+    #{home}/erts-5.10.3/bin/erlsrv.exe add "Apache CouchDB" `
+        -workdir "#{home}/bin"                              `
+        -onfail restart_always                              `
+        -args "-sasl errlog_type error -s couch +A 4 +W w"  `
+        -comment "Apache CouchDB 1.6.1"                     `
+        -i "Apache CouchDB"
   EOH
   action :run
-  not_if <<-EOH
-    $count = Get-Service 'Apache CouchDB' | Where-Object {$_.status -eq 'Running'} | measure
-    $realCount = $count.Count
-    $realCount -gt 0
-  EOH
+  not_if "@(Get-Service 'Apache CouchDB').count -ge 1"
+end
+
+windows_service 'Apache CouchDB' do
+  action :enable
+end
+
+windows_service 'Apache CouchDB' do
+  action :start
 end
