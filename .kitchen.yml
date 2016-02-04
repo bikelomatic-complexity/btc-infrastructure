@@ -25,3 +25,9 @@ suites:
       admin_users:
         - username: "admin_username"
           password: "admin_password"
+  - name: nodejs
+    run_list: 
+      - recipe[btc-infrastructure::default]
+      - recipe[btc-infrastructure::nodejs]
+      - recipe[btc-infrastructure::nodejs_deploy]
+
