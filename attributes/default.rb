@@ -16,6 +16,7 @@ normal['mongodb']['url'] = -> (ver) {"http://downloads.mongodb.org/win32"}
 normal['mongodb']['home'] = 'C:\mongodb'
 
 normal['couchdb']['version'] = '1.6.1'
+normal['couchdb']['name'] = "Apache CouchDB #{node.couchdb.version}"
 normal['couchdb']['exe'] = -> (ver) {"setup-couchdb-#{ver}_R16B02.exe"}
 normal['couchdb']['url'] = -> (ver) {"https://www.apache.org/dist/couchdb/binary/win/#{ver}"}
 normal['couchdb']['home'] = 'C:\CouchDB'
