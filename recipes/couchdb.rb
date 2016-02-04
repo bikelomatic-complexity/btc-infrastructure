@@ -30,12 +30,6 @@ netsh_firewall_rule 'Apache CouchDB' do
   protocol :tcp
 end
 
-# powershell_script 'open-couchport' do
-#   code "netsh advfirewall firewall add rule name=couchport dir=in action=allow localport=5984 protocol=TCP"
-#   action :run
-#   not_if "netsh advfirewall firewall show rule name=couchport"
-# end
-
 powershell_script 'start-couchdb' do
   code <<-EOH
     net.exe start 'Apache CouchDB'
