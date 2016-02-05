@@ -1,0 +1,37 @@
+---
+driver:
+  name: ec2
+  aws_ssh_key_id: <%= ENV['AWS_KEYPAIR_NAME'] %>
+  instance_type: t2.micro
+  region: us-east-1
+  security_group_ids: ["sg-dbfff1a2"] # Allow RDP and WinRM
+  user_data: .kitchen.cloud.bootstrap # Enable PowerShell
+  tags:
+    created_by: test_kitchen
+
+transport:
+  username: Administrator
+  ssh_key: <%= ENV['HOME'] %>/.ssh/<%= ENV['AWS_KEYPAIR_NAME'] %>.pem
+
+provisioner:
+  name: chef_solo
+
+platforms:
+  - name: windows-2012r2
+    driver:
+      image_id: ami-9a0558f0
+
+suites:
+  - name: default
+    run_list:
+      - recipe[btc-infrastructure::default]
+      - recipe[btc-infrastructure::couchdb]
+    attributes:
+      admin_users:
+        - username: "admin_username"
+          password: "admin_password"
+  - name: nodejs
+    run_list:
+      - recipe[btc-infrastructure::default]
+      - recipe[btc-infrastructure::nodejs]
+      # - recipe[btc-infrastructure::nodejs_deploy]
