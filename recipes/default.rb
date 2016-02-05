@@ -1,9 +1,11 @@
 #
-# Cookbook Name:: btdc-server
-# Recipe:: default
+# Cookbook Name:: btc-infrastructure
+# Recipe:: couchdb
 #
-# Copyright (c) 2015 The Authors, All Rights Reserved.
+# Author:: Steven Kroh (<sk.kroh@gmail.com>)
+#
+# Copyright 2016, Adventure Cycling Association
 
-directory node.installers.dir do
+directory node['installers']['dir'] do
   action :create
 end

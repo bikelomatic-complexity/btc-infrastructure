@@ -1,20 +1,25 @@
 ---
 driver:
-  name: vagrant
+  name: ec2
+  aws_ssh_key_id: <%= ENV['AWS_KEYPAIR_NAME'] %>
+  instance_type: t2.micro
+  region: us-east-1
+  security_group_ids: ["sg-dbfff1a2"] # Allow RDP and WinRM
+  user_data: .kitchen.cloud.bootstrap # Enable PowerShell
+  tags:
+    created_by: test_kitchen
+
+transport:
+  username: Administrator
+  ssh_key: <%= ENV['HOME'] %>/.ssh/<%= ENV['AWS_KEYPAIR_NAME'] %>.pem
 
 provisioner:
   name: chef_solo
 
 platforms:
-  - name: mwrock/Windows2012R2
-    os_type: windows
-    shell_type: powershell
+  - name: windows-2012r2
     driver:
-      communicator: winrm
-    transport:
-      name: winrm
-      username: vagrant
-      password: vagrant
+      image_id: ami-9a0558f0
 
 suites:
   - name: default

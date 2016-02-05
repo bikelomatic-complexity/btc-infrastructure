@@ -9,7 +9,7 @@ end
 
 describe 'Database Server Firewall' do
 
-  describe command('netsh advfirewall firewall show rule couchport') do
+  describe command("netsh advfirewall firewall show rule 'Apache CouchDB'") do
     its(:exit_status) { should eq 0 }
     its(:stdout) { should match fwregex('Enabled',    'Yes') }
     its(:stdout) { should match fwregex('Direction',  'In') }
