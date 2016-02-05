@@ -1,8 +1,7 @@
-sudo: required
 branches:
   only:
   - master
-  - "/^v[0.9]/"
+  - /^v[0.9]/
 language: ruby
 bundler_args: "--without development"
 cache: bundler

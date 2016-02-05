@@ -28,9 +28,9 @@ namespace :integration do
 
   desc 'Run Test Kitchen with cloud plugins'
   task :cloud do
-    run_kitchen = true
+    run_kitchen = false
     if ENV['TRAVIS'] == 'true' && ENV['RUN_TEST_KITCHEN'] == 'true'
-      run_kitchen = false
+      run_kitchen = true
     end
 
     if run_kitchen
@@ -45,9 +45,9 @@ namespace :integration do
 
   desc 'Destroy all cloud-based Test Kitchen nodes'
   task :cloud_destroy do
-    run_kitchen = true
+    run_kitchen = false
     if ENV['TRAVIS'] == 'true' && ENV['RUN_TEST_KITCHEN'] == 'true'
-      run_kitchen = false
+      run_kitchen = true
     end
 
     if run_kitchen
