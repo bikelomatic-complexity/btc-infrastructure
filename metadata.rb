@@ -4,7 +4,6 @@ maintainer_email  'sk.kroh@gmail.com'
 license           'AGPL v3'
 description       'Installs and configures Bicycle Touring Companion'
 version           '0.1.0'
-chef_version      '~> 12'
 privacy           true
 
 source_url        'https://github.com/bikelomatic-complexity/btc-infrastructure'
