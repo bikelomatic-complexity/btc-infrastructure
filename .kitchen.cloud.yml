@@ -2,7 +2,7 @@
 driver:
   name: ec2
   aws_ssh_key_id: <%= ENV['AWS_KEYPAIR_NAME'] %>
-  instance_type: t2.micro
+  instance_type: t1.micro
   price: <%= ENV['SPOT_PRICE_BID'] %>
   region: us-east-1
   security_group_ids: ["sg-dbfff1a2"] # Allow RDP and WinRM
