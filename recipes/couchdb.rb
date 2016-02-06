@@ -6,6 +6,13 @@
 #
 # Copyright 2016, Adventure Cycling Association
 
+=begin
+#<
+Downloads and installs CouchDB version `['couchdb']['version']`.
+A service will be created that serves documents on port `['couchdb']['port']`.
+#>
+=end
+
 installers = node['installers']['dir']
 
 url = node['couchdb']['url']

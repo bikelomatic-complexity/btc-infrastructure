@@ -6,6 +6,12 @@
 #
 # Copyright 2016, Adventure Cycling Association
 
+=begin
+#<
+Ensures the directory at `['installers']['dir']` exists.
+#>
+=end
+
 directory node['installers']['dir'] do
   action :create
 end

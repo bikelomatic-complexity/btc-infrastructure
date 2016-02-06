@@ -9,6 +9,8 @@ gem "winrm-transport"
 
 group :development do
   gem "kitchen-vagrant"
+  gem "knife-cookbook-doc"
+  gem "travis"
 end
 
 group :cloud do

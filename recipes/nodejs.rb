@@ -6,6 +6,13 @@
 #
 # Copyright 2016, Adventure Cycling Association
 
+=begin
+#<
+Installs Node.js, including npm. Git is also installed, at version
+`['git']['version']`
+#>
+=end
+
 installers = node['installers']['dir']
 
 include_recipe "git::windows"
