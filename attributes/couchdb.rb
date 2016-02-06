@@ -12,7 +12,7 @@ normal['couchdb']['url'] = url
 # <> The name of the Inno Setup installer for CouchDB.
 normal['couchdb']['exe'] = "setup-couchdb-#{couch_version}_R16B02.exe"
 
-hash = "19060785d7ca9b7a6da9da48b8f7c791ebab2f7fabdab840969434b6e51e234a"
+hash = '19060785d7ca9b7a6da9da48b8f7c791ebab2f7fabdab840969434b6e51e234a'
 
 # <> The sha256 checksum of the installer to download.
 normal['couchdb']['checksum'] = hash
