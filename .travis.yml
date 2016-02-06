@@ -59,3 +59,7 @@ deploy:
     repo: bikelomatic-complexity/btc-infrastructure
     branch: master
     tags: true
+
+notifications:
+  email:
+    on_success: never
