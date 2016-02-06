@@ -6,10 +6,8 @@
 *.un~
 pkg/
 
-# Berkshelf
-.vagrant
-/cookbooks
-*.tar.gz
+# Travis CI deploy
+cookbooks/
 
 # Bundler
 bin/*
