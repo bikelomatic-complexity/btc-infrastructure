@@ -1,14 +1,13 @@
 require 'serverspec'
 
 set :backend, :cmd
-set :os, :family => 'windows'
+set :os, family: 'windows'
 
 def fwregex(key, val)
-  return /#{key}:\s*#{val}/
+  /#{key}:\s*#{val}/
 end
 
 describe 'Database Server Firewall' do
-
   describe command("netsh advfirewall firewall show rule 'Apache CouchDB'") do
     its(:exit_status) { should eq 0 }
     its(:stdout) { should match fwregex('Enabled',    'Yes') }
@@ -21,5 +20,4 @@ describe 'Database Server Firewall' do
     its(:stdout) { should match fwregex('RemotePort', 'Any') }
     its(:stdout) { should match fwregex('Action',     'Allow') }
   end
-
 end

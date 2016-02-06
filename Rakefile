@@ -3,20 +3,20 @@
 require 'knife_cookbook_doc/rake_task'
 require 'bundler/setup'
 require 'rspec/core/rake_task'
-# require 'rubocop/rake_task'
+require 'rubocop/rake_task'
 require 'foodcritic'
 require 'kitchen'
 
 namespace :style do
-  # desc 'Run Ruby style checks'
-  # RuboCop::RakeTask.new(:ruby)
+  desc 'Run Ruby style checks'
+  RuboCop::RakeTask.new(:ruby)
 
   desc 'Run Chef style checks'
   FoodCritic::Rake::LintTask.new(:chef)
 end
 
 desc 'Run all style checks'
-task style: ['style:chef']
+task style: ['style:chef', 'style:ruby']
 
 desc 'Create README.md for this cookbook'
 task :doc do
@@ -34,16 +34,20 @@ namespace :integration do
     end
   end
 
-  run_kitchen = false
-  if ENV['TRAVIS'] == 'true' && ENV['TRAVIS_PULL_REQUEST'] != 'false' && ENV['IGNORE_TEST_KITCHEN'] != 'true'
-    run_kitchen = true
-  end
+  travis = ENV['TRAVIS'] == 'true'
+  pull = ENV['TRAVIS_PULL_REQUEST'] != 'false'
+  not_ignore = ENV['IGNORE_TEST_KITCHEN'] != 'true'
+
+  run_kitchen = travis && pull && not_ignore
 
   desc 'Run Test Kitchen with cloud plugins'
   task :cloud do
     if run_kitchen
       Kitchen.logger = Kitchen.default_file_logger
-      @loader = Kitchen::Loader::YAML.new(project_config: './.kitchen.cloud.yml')
+
+      yml = './.kitchen.cloud.yml'
+      @loader = Kitchen::Loader::YAML.new(project_config: yml)
+
       config = Kitchen::Config.new(loader: @loader)
       config.instances.each do |instance|
         instance.test(:always)
@@ -55,11 +59,12 @@ namespace :integration do
   task :cloud_destroy do
     if run_kitchen
       Kitchen.logger = Kitchen.default_file_logger
-      @loader = Kitchen::Loader::YAML.new(project_config: './.kitchen.cloud.yml')
+
+      yml = './.kitchen.cloud.yml'
+      @loader = Kitchen::Loader::YAML.new(project_config: yml)
+
       config = Kitchen::Config.new(loader: @loader)
-      config.instances.each do |instance|
-        instance.destroy
-      end
+      config.instances.each(&:destroy)
     end
   end
 end

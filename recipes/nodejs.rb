@@ -1,4 +1,3 @@
-#
 # Cookbook Name:: btc-infrastructure
 # Recipe:: nodejs
 #
@@ -15,7 +14,7 @@ Installs Node.js, including npm. Git is also installed, at version
 
 installers = node['installers']['dir']
 
-include_recipe "git::windows"
+include_recipe 'git::windows'
 
 node_url = node['nodejs']['url']
 node_msi = node['nodejs']['msi']
@@ -26,7 +25,7 @@ remote_file "#{installers}/#{node_msi}" do
   action :create
 end
 
-windows_package "Node.js" do
+windows_package 'Node.js' do
   source "#{installers}/#{node_msi}"
   action :install
 end

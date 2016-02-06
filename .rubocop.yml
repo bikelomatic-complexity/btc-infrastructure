@@ -1,0 +1,6 @@
+AllCops:
+  Exclude:
+    - 'cookbooks/**/*'
+    - 'build/**/*'
+EndOfLine:
+  Enabled: false

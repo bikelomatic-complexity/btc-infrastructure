@@ -1,4 +1,3 @@
-#
 # Cookbook Name:: btc-infrastructure
 # Recipe:: couchdb
 #

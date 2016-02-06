@@ -1,11 +1,10 @@
 require 'serverspec'
 
 set :backend, :cmd
-set :os, :family => 'windows'
+set :os, family: 'windows'
 
-describe "CouchDB Server" do
-
-  describe service("Apache CouchDB") do
+describe 'CouchDB Server' do
+  describe service('Apache CouchDB') do
     it { should be_installed }
     it { should be_enabled }
     it { should be_running }
@@ -18,5 +17,4 @@ describe "CouchDB Server" do
   describe file('C:\CouchDB\etc\couchdb\local.ini') do
     it { should be_file }
   end
-
 end
