@@ -9,6 +9,7 @@ pkg/
 # Berkshelf
 .vagrant
 /cookbooks
+*.tar.gz
 
 # Bundler
 bin/*

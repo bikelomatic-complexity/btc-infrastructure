@@ -1,16 +1,19 @@
 branches:
   only:
   - master
-  - /^v[0.9]/
+  - "/^v[0.9]/"
+
 language: ruby
 bundler_args: "--without development"
 cache: bundler
 rvm:
 - rvm 2.2.4
+
 before_install:
 - openssl aes-256-cbc -K $encrypted_cef53fffa350_key -iv $encrypted_cef53fffa350_iv
   -in "${AWS_KEYPAIR_NAME}.pem.enc" -out "${HOME}/.ssh/${AWS_KEYPAIR_NAME}.pem" -d
 - chmod 600 "${HOME}/.ssh/${AWS_KEYPAIR_NAME}.pem"
+
 before_script:
 - bundle exec berks install
 script:
@@ -19,8 +22,26 @@ after_script:
 - bundle exec rake integration:cloud_destroy
 after_failure:
 - echo "Kitchen-ec2 is using AWS spot pricing. The price may be too low!"
+
 env:
   global:
   - secure: JG0UxuKNDJ6QpJgHbKyoRkOxSRX4edjw8OG//Bsjfau8qYEQTcLFOknvlI9j0BTtcadP4lRngknmuuwaLBZSqEJICj6usMbNzWBIP4UHRwNbtGSAmegD7uCxoTDObxHr9CBbvyMH2/6UNaDewYDw15FD9klCdpTRoUmIlr9ISC22QEkpl7fgiuQxykKn6SwnpC6KUG42TSb8o6aw69U9q/PlbiZNXiuksPjwa2N8XlFIuoSynxGV2EO0mjxpE6oVzI0npqHAq42DDPy9xrJ0zXOjaK+4MeiClUyWDN9Jtt11Jy7Lxq3YWx9NwcEA0K6pYOYkauak0Cp4p4jquPCfMigO8nyNmSR0T/nc5MpYuKiRAke+1VDqPMeoEkJlFgDfSjI64miTGEwPqB1QHxrdtgLpAdGJ2XEOUsGjJdIw9Ja/IEYoPUT/aW/htJfHK/bOO+UMfHUNSQsSZ9M8KsYcv5exb2E9sQ3BJwCPYwy//LduKlRrNMTmy4r0cgMPKBeUp9NAPWw+O2HWQtyYuPRlWU3/6EbWdysV2ZsLW9JFE+k4aPMOILa97joD7Vbj41HpT5LSSP/GGKrleGypVjX7UmnYM91Aio7d0xQC2RvJ/AkTmwNhIinLH0C2ng+hS1ZNcjt42+PaKSRl/q4+vS5rImrBDE3i6fQ88DC0w7k6I8c=
   - secure: OSYFaGDT+Wc3BZU0mBfnVzXUfdD+U5A3nPe7XAAe1WDwXNrF8QgUq+Enh1Wp2m66uIjzuekYfOcXMSaBulB+9g/IZ1tpccnW5VFypbQ4KnhMgM2HxmYBuvhPc6Eu5G4G0hODjo32bCSc3OtNLhN56yPaMQb5jGUbGiC4fkzvZJAsl7an3ORj+z/0VciYtYAuqg18V9jiiXPAtnlMWHT3qEKLORaG6IgoXxcpJgznj/sR8oepj+ocAfhUdP2zeqgsKochY/GwW6eiX18AvzHv0PeN+Or1RHu8es53FlKuUQYTsa1UHOjKfqNK5E+TwFLa7ZB+tkMBkVEZeEwhEYu/+nVGq06sNzzCLbc1s42QOjh8KtiRB16xZeaRBkUVTL6rPk4W8rgC0kTKn/uyVTpgNHzQ72BbUcptHm/LUN4rc1KgO8EM6ZKq1xl2Ck8SCoA9VZw7Hs5OyWiQcKRnWARFoBIDETLIFiEIl3JIUfqoO0ky2VgyC7aQRhSYo66fViNgFC6N5Qne+d3PrTvL2Au7f1oA/5zUQU0fWu8zOhdQ4p4qNfSO70YGowvufd4o0I6UHGOc4fptMaPOYaLGkGfN7tEZ6/kRZJMrE8yAgAHHAUopAoN/xaZ+mr+N1jIwrecOM25fBeqgGOG01sU9WXAvsHROu3bAIFVZD1cMi6zMs+Y=
   - secure: BWc/4bJ5H8s4dZhrIW1mDHCbGvSLFtu+epf8ijaFT2/WRO6BDjYHhM4HHvCJFsu4D2GLTXRbJqzwKj8sUjnLIYYpGckQbpl9fp6pe+FHyFd6ssnDj3wq1bnz4SIQ9CLNEq013Bne6jepQoRW4ABhSiNBjh8ejvDywqq+fr8Kc0g1XeYx9JW94sSh4Zdpv9itqcAZE2QnNYDLPdN3fpKmz5dO6XGnxbKXmdUNh8T1CN8K5TlhelsEYtZYUjQwGbVBJgjllHk5wvGMBcQduDZeJnuwfL8Jb+Jaq6mU39OxuTX0Ks0qzMKmD7EsLtloZ2h4xV9rzY7JZClKUx63f7vOwQTlHe6TWRwIEfRz2YwQF+8S0e2fSAT33plU+8ELOHKAimR7dief4VRFjl8lhJeoKzSFCuQiafv/087EBPoXqJ6pOjmNndL1pj5t4IYoydOBHAhADwXUH1jBNGOrc7SBAYWP/5mE4HIl9bfHmxHhZbAYy4rdR0Ym7swIH1Mv8NgUwjdtUMe13nmhnQIQCH4YjLkPcROHSTt9aTCm43exGAgq5UKldMhNQHjqcgG0mX0ctNprBrcd6Yky0MQNRXW6yGQMsYJifLbenGXw3gKS2/DXI2egNgY3poYrNwKJ5VfvBontpMbpdIZr0NV44txx4A4ZmRdNxZ2hrITeo/jweRM=
+
+before_deploy:
+- bundle exec berks package cookbooks.tar.gz
+deploy:
+  provider: s3
+  access_key_id: AKIAICLAFRF4D22VMTOA
+  secret_access_key:
+    secure: mVaW8UZQdJHJZR8hyoRRwbh2QW9Ofphl3frlzKP/bn8lhmJPfTulngZAIifUyv5gXhOyRo9cUUTXGujjduyi2OuyG6y09TqTOHNvk8nDaKnlbwiKL/uL/2N/s2iRpLkkL7JgHO2D2GTyh0bJqvLBxuHnP6I4ZG1U8ptFiFsrg/SPt059pklauHmE9P+QAIoOJKqhOWjvSAURkj+j0DY2OAWzIIkfqRLaRSx+wWJUgYcVCq5XW5aB9PyqrOE5d5Uf+MfhuLl2srkMqFGVCAwP2DV/iBQG6eLKxNaEGVzfPSo/ktAVKlPsJGwlxANKSAG/yr+lTHuP1YKGEBp5So2ArJgX2jTAVMnBp5Nnntbb1zkIwQsHaCX14MW8nTeTq0WD4/o/LUqn8WqeJ88kiO8dLvwRwj3IHoksRmI1HgnJyEqhO9qApy/2mDfzhhCB0rKe41tSMJQt1YEEGEiNZT1gb+E4VTCmSvK2uOdrUWclcotDEabirGnRvgqiJgwc3bcsXqOwTNhbz6MuhhfsDQtPYCh8dPg5KUSpVH/XWAnr2zoTwF/eUrAVESPJlbuFNEmY8HrrTTGpfvgtAKzNxeoe9IMD6zgWJlJmSkYXjruNlyK3CZZBTpWkL5/4kLRUyjYL5JVWKc5fDGQG4oT/VgTB0p9NiK6jRTHhkJ4Ohs9DnUo=
+  bucket: btc-infrastructure
+  acl: private
+  skip_cleanup: true
+  file: cookbooks.tar.gz
+  detect_encoding: true
+  on:
+    repo: bikelomatic-complexity/btc-infrastructure
+    branch: master
+    tags: true
