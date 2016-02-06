@@ -13,7 +13,7 @@ exe = "Git-#{git_version}-64-bit.exe"
 # <> Full url to the git install executable
 normal['git']['url'] = "#{base}/v#{git_version}.windows.1/#{exe}"
 
+hash = "edab3c7ee50cdcb66ac66b5f3b2e7ea7ce25c85ffc03e9602deffd8eb27e323e"
+
 # <> sha256 checksum of the git installer executable
-normal['git']['checksum'] = <<-EOH
-edab3c7ee50cdcb66ac66b5f3b2e7ea7ce25c85ffc03e9602deffd8eb27e323e
-EOH
+normal['git']['checksum'] = hash
