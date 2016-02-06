@@ -27,6 +27,7 @@ suites:
     run_list:
       - recipe[btc-infrastructure::default]
       - recipe[btc-infrastructure::couchdb]
+      - recipe[btc-infrastructure::couchdb_bootstrap]
     attributes:
       admin_users:
         - username: "admin_username"
