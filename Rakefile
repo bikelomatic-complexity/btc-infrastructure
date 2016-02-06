@@ -1,5 +1,6 @@
 #!/usr/bin/env rake
 
+require 'knife_cookbook_doc/rake_task'
 require 'bundler/setup'
 require 'rspec/core/rake_task'
 # require 'rubocop/rake_task'
@@ -16,6 +17,13 @@ end
 
 desc 'Run all style checks'
 task style: ['style:chef']
+
+desc 'Create README.md for this cookbook'
+task :doc do
+  KnifeCookbookDoc::RakeTask.new(:doc) do |t|
+    t.options[:output_file] = 'README.md'
+  end
+end
 
 namespace :integration do
   desc 'Run Test Kitchen with Vagrant'

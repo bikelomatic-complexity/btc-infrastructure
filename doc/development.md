@@ -1,31 +1,3 @@
-# Description
-
-[![Build Status](https://travis-ci.org/bikelomatic-complexity/btc-infrastructure.svg?branch=master)](https://travis-ci.org/bikelomatic-complexity/btc-infrastructure)
-
-Configures Windows Server instances to run the Bicycle Touring Companion application and infrastructure
-
-# Requirements
-
-## Platform:
-
-* windows
-
-## Cookbooks:
-
-* netsh_firewall (>= 0.3.2)
-* git (>= 4.3.7)
-
-# Attributes
-
-* `node['admin_users']` - Array of admin users as {:username, :password} hashes. Defaults to `[ ... ]`.
-
-# Recipes
-
-* btc-infrastructure::couchdb
-* btc-infrastructure::default
-* btc-infrastructure::nodejs
-* btc-infrastructure::nodejs_deploy
-
 # Development
 ## On your own machine
 This project is a Chef cookbook. It is used to provision our EC2 instances to support the Bicyle Touring Companion app. To learn
@@ -90,12 +62,3 @@ checks, unit tests, and integration tests.
 
  - `$ bundle exec rake style` to run Chef's foodcritic and eventually rubocop.
  - `$ bundle exec rake doc` to generate this `README.md`
-
-
-# License and Maintainer
-
-Maintainer:: Adventure Cycling Association (<sk.kroh@gmail.com>)
-Source:: https://github.com/bikelomatic-complexity/btc-infrastructure
-Issues:: https://github.com/bikelomatic-complexity/btc-infrastructure/issues
-
-License:: AGPL v3
