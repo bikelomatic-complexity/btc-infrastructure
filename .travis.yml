@@ -32,16 +32,25 @@ env:
 before_deploy:
 - bundle exec berks package cookbooks.tar.gz
 deploy:
-  provider: s3
-  access_key_id: AKIAICLAFRF4D22VMTOA
-  secret_access_key:
-    secure: mVaW8UZQdJHJZR8hyoRRwbh2QW9Ofphl3frlzKP/bn8lhmJPfTulngZAIifUyv5gXhOyRo9cUUTXGujjduyi2OuyG6y09TqTOHNvk8nDaKnlbwiKL/uL/2N/s2iRpLkkL7JgHO2D2GTyh0bJqvLBxuHnP6I4ZG1U8ptFiFsrg/SPt059pklauHmE9P+QAIoOJKqhOWjvSAURkj+j0DY2OAWzIIkfqRLaRSx+wWJUgYcVCq5XW5aB9PyqrOE5d5Uf+MfhuLl2srkMqFGVCAwP2DV/iBQG6eLKxNaEGVzfPSo/ktAVKlPsJGwlxANKSAG/yr+lTHuP1YKGEBp5So2ArJgX2jTAVMnBp5Nnntbb1zkIwQsHaCX14MW8nTeTq0WD4/o/LUqn8WqeJ88kiO8dLvwRwj3IHoksRmI1HgnJyEqhO9qApy/2mDfzhhCB0rKe41tSMJQt1YEEGEiNZT1gb+E4VTCmSvK2uOdrUWclcotDEabirGnRvgqiJgwc3bcsXqOwTNhbz6MuhhfsDQtPYCh8dPg5KUSpVH/XWAnr2zoTwF/eUrAVESPJlbuFNEmY8HrrTTGpfvgtAKzNxeoe9IMD6zgWJlJmSkYXjruNlyK3CZZBTpWkL5/4kLRUyjYL5JVWKc5fDGQG4oT/VgTB0p9NiK6jRTHhkJ4Ohs9DnUo=
-  bucket: btc-infrastructure
-  acl: private
-  skip_cleanup: true
-  file: cookbooks.tar.gz
-  detect_encoding: true
-  on:
-    repo: bikelomatic-complexity/btc-infrastructure
-    branch: master
-    tags: true
+  - provider: s3
+    access_key_id: AKIAICLAFRF4D22VMTOA
+    secret_access_key:
+      secure: mVaW8UZQdJHJZR8hyoRRwbh2QW9Ofphl3frlzKP/bn8lhmJPfTulngZAIifUyv5gXhOyRo9cUUTXGujjduyi2OuyG6y09TqTOHNvk8nDaKnlbwiKL/uL/2N/s2iRpLkkL7JgHO2D2GTyh0bJqvLBxuHnP6I4ZG1U8ptFiFsrg/SPt059pklauHmE9P+QAIoOJKqhOWjvSAURkj+j0DY2OAWzIIkfqRLaRSx+wWJUgYcVCq5XW5aB9PyqrOE5d5Uf+MfhuLl2srkMqFGVCAwP2DV/iBQG6eLKxNaEGVzfPSo/ktAVKlPsJGwlxANKSAG/yr+lTHuP1YKGEBp5So2ArJgX2jTAVMnBp5Nnntbb1zkIwQsHaCX14MW8nTeTq0WD4/o/LUqn8WqeJ88kiO8dLvwRwj3IHoksRmI1HgnJyEqhO9qApy/2mDfzhhCB0rKe41tSMJQt1YEEGEiNZT1gb+E4VTCmSvK2uOdrUWclcotDEabirGnRvgqiJgwc3bcsXqOwTNhbz6MuhhfsDQtPYCh8dPg5KUSpVH/XWAnr2zoTwF/eUrAVESPJlbuFNEmY8HrrTTGpfvgtAKzNxeoe9IMD6zgWJlJmSkYXjruNlyK3CZZBTpWkL5/4kLRUyjYL5JVWKc5fDGQG4oT/VgTB0p9NiK6jRTHhkJ4Ohs9DnUo=
+    bucket: btc-infrastructure
+    acl: private
+    skip_cleanup: true
+    file: cookbooks.tar.gz
+    detect_encoding: true
+    on:
+      repo: bikelomatic-complexity/btc-infrastructure
+      branch: master
+      tags: true
+  - provider: releases
+    api_key:
+      secure: "bFurkvA4UnXD6dufNNPWl8E4ptKNI+U1qIOy4XoOCXuxVNeHU3LOaivYiFBtLzgANrWVfMpifeaNmn1Pij5+rvTia0mMcC+bLgVX2D8rkmbvwL1kjMbInZxmIIOJTtXaHtWJo90ZAuPCOEwCpDsy5VXMr/Deztbn2bZiPiA8PvvqzRIaOHCgCUbheWoXSGHuXlfeiY1K+VEH1B9lECU9+XdavH52YeQp10LjQ0o7EyV55x5FHg9lvZuWBGYaN/Q8amZLSfRvIdb5fdlTYA7AodLab1SLq/5NK645Pw44avKTslsu1UJ6hUu6vl2AMkSPD642Nk6t9AOOVo0fEQqRB4w5bKEzvFNIMw/xiiXWlL/w1MyicY7uQ5UUZMKi6qVZMfJpuKigF4xDPw25L2DAAeOoeYBV1GHQsjFGIeB8BGKFHeLVuDGzXnvAHAapvPOLMOgSC5hSDlNHnamqdQDtYxAwDHjGQrQjqFkTpBvHMWkz5M+kMRzAWW1/JQ+NcFxFZU6XQpURXL7bqBoFD7BxLuAxEaOJoOiQBrDYrmCByFGAxKhxr5dvriFk6OcZF86tNdDSi+k5QilVlMi33aKnkrHeqVPifNjB52SDn8NW1Cl3Q/n5FFXdn9yxXt/km223dDTGPzMXqjRa1RbUhQWYYITETBdIHRIRTB7nUM0s5qA="
+    skip_cleanup: true
+    file: cookbooks.tar.gz
+    on:
+      repo: bikelomatic-complexity/btc-infrastructure
+      branch: master
+      tags: true
