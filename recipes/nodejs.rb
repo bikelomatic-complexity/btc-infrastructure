@@ -32,6 +32,4 @@ windows_package 'Node.js' do
 end
 
 # Need to correct the Chef process for the rest of our run
-if !ENV['Path'].match(/nodejs/)
-  ENV['Path'] += ';C:\\Program Files\\nodejs\\'
-end
+ENV['Path'] += ';C:/Program Files/nodejs/' unless ENV['Path'] =~ /nodejs/

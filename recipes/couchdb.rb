@@ -37,11 +37,8 @@ powershell_script 'install_couchdb' do
   action :run
 end
 
-template_path = "#{home}/etc/couchdb/local.ini"
-template_resource = "template[#{template_path}]"
-
 # Copy over our CouchDB credentials and other config.
-template template_path do
+template "#{home}/etc/couchdb/local.ini" do
   source 'local.ini.erb'
 end
 
