@@ -25,7 +25,13 @@ remote_file "#{installers}/#{node_msi}" do
   action :create
 end
 
+# Install Node.js to Program Files and update Path
 windows_package 'Node.js' do
   source "#{installers}/#{node_msi}"
   action :install
+end
+
+# Need to correct the Chef process for the rest of our run
+if !ENV['Path'].match(/nodejs/)
+  ENV['Path'] += ';C:\\Program Files\\nodejs\\'
 end

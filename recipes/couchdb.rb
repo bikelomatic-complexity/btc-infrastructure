@@ -79,6 +79,5 @@ windows_service 'Apache CouchDB' do
 end
 
 windows_service 'Apache CouchDB' do
-  action :start
-  subscribes :restart, template_resource, :immediately
+  action :restart
 end
