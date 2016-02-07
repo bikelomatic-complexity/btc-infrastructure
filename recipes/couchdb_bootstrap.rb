@@ -30,10 +30,7 @@ powershell_script 'install_couchdb_bootstrap' do
   code 'npm install -g --silent couchdb-bootstrap'
   cwd "#{work}/couchdb"
   action :run
-  not_if <<-EOH
-  Test-Path ( [Environment]::GetFolderPath('ApplicationData') + `
-    '/npm/couchdb-bootstrap.cmd' )
-  EOH
+  not_if 'Get-Command couchdb-bootstrap'
 end
 
 admin = node['admin_users'][0]
@@ -45,12 +42,7 @@ port = node['couchdb']['port']
 # Run couchdb-bootstrap on our folder structure.
 # TODO: Figure out better npm path solution
 powershell_script 'bootstrap' do
-  code <<-EOH
-  $npm = [Environment]::GetFolderPath('ApplicationData') + '/npm'
-  $env:Path += ';' + $npm
-
-  couchdb-bootstrap http://#{username}:#{password}@localhost:#{port}
-  EOH
+  code "couchdb-bootstrap http://#{username}:#{password}@localhost:#{port}"
   cwd "#{work}/couchdb"
   action :run
 end

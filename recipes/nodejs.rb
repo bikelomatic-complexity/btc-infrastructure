@@ -14,8 +14,6 @@ Installs Node.js, including npm. Git is also installed, at version
 
 installers = node['installers']['dir']
 
-include_recipe 'git::windows'
-
 node_url = node['nodejs']['url']
 node_msi = node['nodejs']['msi']
 
@@ -31,5 +29,10 @@ windows_package 'Node.js' do
   action :install
 end
 
-# Need to correct the Chef process for the rest of our run
-ENV['Path'] += ';C:/Program Files/nodejs/' unless ENV['Path'] =~ /nodejs/
+windows_path 'C:\\Program Files\\nodejs' do
+  action :add
+end
+
+windows_path '%AppData%\\npm' do
+  action :add
+end

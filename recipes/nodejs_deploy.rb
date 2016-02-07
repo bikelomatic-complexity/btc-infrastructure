@@ -6,6 +6,8 @@
 #
 # Copyright 2016, Adventure Cycling Association
 
+include_recipe 'git::windows'
+
 server_dir = node['server']['dir']
 directory server_dir
 
