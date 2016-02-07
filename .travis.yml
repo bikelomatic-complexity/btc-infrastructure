@@ -32,15 +32,15 @@ env:
 # `before_deploy` is fatal with >1 deploy providers. This `after_success` will
 # only package the cookbooks if we're running on a tagged commit
 after_success:
-- mkdir cookbooks
-- echo $TRAVIS_TAG
-- "[[ $TRAVIS_TAG != '' ]] && bundle exec berks package cookbooks/cookbooks.tgz"
+- "[[ $TRAVIS_TAG != '' ]] && bundle exec berks vendor cookbooks"
+- "[[ $TRAVIS_TAG != '' ]] && mkdir deploy"
+- "[[ $TRAVIS_TAG != '' ]] && tar czf deploy/cookbooks.tgz -C cookbooks ."
 
 deploy:
 - provider: releases
   api_key:
     secure: bFurkvA4UnXD6dufNNPWl8E4ptKNI+U1qIOy4XoOCXuxVNeHU3LOaivYiFBtLzgANrWVfMpifeaNmn1Pij5+rvTia0mMcC+bLgVX2D8rkmbvwL1kjMbInZxmIIOJTtXaHtWJo90ZAuPCOEwCpDsy5VXMr/Deztbn2bZiPiA8PvvqzRIaOHCgCUbheWoXSGHuXlfeiY1K+VEH1B9lECU9+XdavH52YeQp10LjQ0o7EyV55x5FHg9lvZuWBGYaN/Q8amZLSfRvIdb5fdlTYA7AodLab1SLq/5NK645Pw44avKTslsu1UJ6hUu6vl2AMkSPD642Nk6t9AOOVo0fEQqRB4w5bKEzvFNIMw/xiiXWlL/w1MyicY7uQ5UUZMKi6qVZMfJpuKigF4xDPw25L2DAAeOoeYBV1GHQsjFGIeB8BGKFHeLVuDGzXnvAHAapvPOLMOgSC5hSDlNHnamqdQDtYxAwDHjGQrQjqFkTpBvHMWkz5M+kMRzAWW1/JQ+NcFxFZU6XQpURXL7bqBoFD7BxLuAxEaOJoOiQBrDYrmCByFGAxKhxr5dvriFk6OcZF86tNdDSi+k5QilVlMi33aKnkrHeqVPifNjB52SDn8NW1Cl3Q/n5FFXdn9yxXt/km223dDTGPzMXqjRa1RbUhQWYYITETBdIHRIRTB7nUM0s5qA=
-  file: cookbooks/cookbooks.tgz
+  file: deploy/cookbooks.tgz
   skip_cleanup: true
   on:
     repo: bikelomatic-complexity/btc-infrastructure
@@ -53,7 +53,7 @@ deploy:
   bucket: btc-infrastructure
   acl: private
   skip_cleanup: true
-  local_dir: cookbooks
+  local_dir: deploy
   detect_encoding: true
   on:
     repo: bikelomatic-complexity/btc-infrastructure

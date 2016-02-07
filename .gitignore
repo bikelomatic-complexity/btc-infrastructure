@@ -8,6 +8,7 @@ pkg/
 
 # Travis CI deploy
 cookbooks/
+deploy/
 
 # Bundler
 bin/*
