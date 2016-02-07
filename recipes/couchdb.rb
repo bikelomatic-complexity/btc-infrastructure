@@ -37,8 +37,7 @@ powershell_script 'install_couchdb' do
   action :run
 end
 
-# Copy over our CouchDB config.
-# TODO: Transition to couchdb-bootstrap, an npm package
+# Copy over our CouchDB credentials and other config.
 template "#{home}/etc/couchdb/local.ini" do
   source 'local.ini.erb'
 end
@@ -77,5 +76,5 @@ windows_service 'Apache CouchDB' do
 end
 
 windows_service 'Apache CouchDB' do
-  action :start
+  action :restart
 end
