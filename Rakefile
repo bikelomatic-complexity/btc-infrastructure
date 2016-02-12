@@ -63,6 +63,8 @@ namespace :integration do
       config.instances.each do |instance|
         instance.test(:always)
       end
+    else
+      puts 'Not running test kitchen!'
     end
   end
 
