@@ -6,6 +6,7 @@ require 'rspec/core/rake_task'
 require 'rubocop/rake_task'
 require 'foodcritic'
 require 'kitchen'
+require 'yaml'
 
 namespace :style do
   desc 'Run Ruby style checks'
@@ -23,6 +24,16 @@ task :doc do
   KnifeCookbookDoc::RakeTask.new(:doc) do |t|
     t.options[:output_file] = 'README.md'
   end
+end
+
+desc 'Merge suites and kitchen drivers into separate .kitchen.ymls'
+task :merge do
+  suites = YAML.load(File.new('kitchen/suites.yml', 'r').read)
+  vagrant = YAML.load(File.new('kitchen/vagrant.yml', 'r').read)
+  cloud = YAML.load(File.new('kitchen/cloud.yml', 'r').read)
+
+  File.new('.kitchen.yml', 'w').write(suites.merge(vagrant).to_yaml)
+  File.new('.kitchen.cloud.yml', 'w').write(suites.merge(cloud).to_yaml)
 end
 
 namespace :integration do
@@ -70,7 +81,7 @@ namespace :integration do
 end
 
 desc 'Run all tests on Travis'
-task travis: %w(style integration:cloud)
+task travis: %w(merge style integration:cloud)
 
 # Default
-task default: %w(style)
+task default: %w(merge style)

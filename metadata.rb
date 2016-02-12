@@ -9,6 +9,6 @@ source_url        'https://github.com/bikelomatic-complexity/btc-infrastructure'
 issues_url        'https://github.com/bikelomatic-complexity/btc-infrastructure/issues'
 
 depends          'netsh_firewall', '>= 0.3.2'
-depends          'git', '>= 4.3.7'
+depends          'nssm', '~> 1.2.0'
 
 supports         'windows'

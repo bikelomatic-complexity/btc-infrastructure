@@ -8,11 +8,11 @@ pkg/
 
 # Travis CI deploy
 cookbooks/
-deploy/
+./deploy/
 
 # Bundler
 bin/*
 .bundle/*
 
 .kitchen/
-.kitchen.local.yml
+.kitchen*.yml
