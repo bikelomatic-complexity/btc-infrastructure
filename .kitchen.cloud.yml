@@ -15,7 +15,7 @@ transport:
   ssh_key: <%= ENV['HOME'] %>/.ssh/<%= ENV['AWS_KEYPAIR_NAME'] %>.pem
 
 provisioner:
-  name: chef_solo
+  name: chef_zero
 
 platforms:
   - name: windows-2012r2
