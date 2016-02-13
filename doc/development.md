@@ -17,6 +17,9 @@ instance of Windows Server 2012 R2. To do this, install both VirtualBox (a 4.x
 release) and vagrant. Then, add the [`mwrock/Windows2012R2` ](https://atlas.hashicorp.com/mwrock/boxes/Windows2012R2) box.
  - `$ vagrant box add mwrock/Windows2012R2`
 
+Before you do anything else: Run this, to generate the `.kitchen.yml`:
+ - `$ bundle exec rake merge`
+
 Then, you can issue these Test Kitchen commands:
 
  - `$ kitchen create` will create VirtualBox vm's for each test suite

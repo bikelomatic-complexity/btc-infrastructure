@@ -13,15 +13,17 @@ Configures Windows Server instances to run the Bicycle Touring Companion applica
 ## Cookbooks:
 
 * netsh_firewall (>= 0.3.2)
-* git (>= 4.3.7)
+* nssm (~> 1.2.0)
 
 # Attributes
 
 * `node['admin_users']` - Array of admin users as {:username, :password} hashes. Defaults to `[ ... ]`.
+* `node['server']['name']` -  Defaults to `btc-app-server`.
 
 # Recipes
 
 * btc-infrastructure::couchdb
+* btc-infrastructure::couchdb_bootstrap
 * btc-infrastructure::default
 * btc-infrastructure::nodejs
 * btc-infrastructure::nodejs_deploy

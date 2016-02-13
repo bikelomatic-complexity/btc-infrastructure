@@ -6,7 +6,7 @@ driver:
   price: <%= ENV['SPOT_PRICE_BID'] %>
   region: us-east-1
   security_group_ids: ["sg-dbfff1a2"] # Allow RDP and WinRM
-  user_data: kitchen/bootstrap.ps1 # Enable PowerShell
+  user_data: bootstrap.ps1 # Enable PowerShell
   tags:
     created_by: test_kitchen
 

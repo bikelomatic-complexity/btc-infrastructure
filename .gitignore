@@ -15,4 +15,4 @@ bin/*
 .bundle/*
 
 .kitchen/
-.kitchen*.yml
+.kitchen.local.yml

@@ -1,12 +1,9 @@
 #!/usr/bin/env rake
 
-require 'knife_cookbook_doc/rake_task'
 require 'bundler/setup'
-require 'rspec/core/rake_task'
+require 'knife_cookbook_doc/rake_task'
 require 'rubocop/rake_task'
 require 'foodcritic'
-require 'kitchen'
-require 'yaml'
 
 namespace :style do
   desc 'Run Ruby style checks'
@@ -26,64 +23,19 @@ task :doc do
   end
 end
 
-desc 'Merge suites and kitchen drivers into separate .kitchen.ymls'
-task :merge do
-  suites = YAML.load(File.new('kitchen/suites.yml', 'r').read)
-  vagrant = YAML.load(File.new('kitchen/vagrant.yml', 'r').read)
-  cloud = YAML.load(File.new('kitchen/cloud.yml', 'r').read)
-
-  File.new('.kitchen.yml', 'w').write(suites.merge(vagrant).to_yaml)
-  File.new('.kitchen.cloud.yml', 'w').write(suites.merge(cloud).to_yaml)
-end
-
-namespace :integration do
-  desc 'Run Test Kitchen with Vagrant'
-  task :vagrant do
-    Kitchen.logger = Kitchen.default_file_logger
-    Kitchen::Config.new.instances.each do |instance|
-      instance.test(:always)
-    end
-  end
-
+desc 'Run Test Kitchen with cloud plugins'
+task :integration do
   travis = ENV['TRAVIS'] == 'true'
   pull = ENV['TRAVIS_PULL_REQUEST'] != 'false'
   not_ignore = ENV['IGNORE_TEST_KITCHEN'] != 'true'
 
-  run_kitchen = travis && pull && not_ignore
-
-  desc 'Run Test Kitchen with cloud plugins'
-  task :cloud do
-    if run_kitchen
-      Kitchen.logger = Kitchen.default_file_logger
-
-      yml = './.kitchen.cloud.yml'
-      @loader = Kitchen::Loader::YAML.new(project_config: yml)
-
-      config = Kitchen::Config.new(loader: @loader)
-      config.instances.each do |instance|
-        instance.test(:always)
-      end
-    else
-      puts 'Not running test kitchen!'
-    end
-  end
-
-  desc 'Destroy all cloud-based Test Kitchen nodes'
-  task :cloud_destroy do
-    if run_kitchen
-      Kitchen.logger = Kitchen.default_file_logger
-
-      yml = './.kitchen.cloud.yml'
-      @loader = Kitchen::Loader::YAML.new(project_config: yml)
-
-      config = Kitchen::Config.new(loader: @loader)
-      config.instances.each(&:destroy)
-    end
+  if travis && pull && not_ignore
+    `cp .kitchen.cloud.yml .kitchen.local.yml`
+    `kitchen test --destroy=always`
   end
 end
 
-desc 'Run all tests on Travis'
-task travis: %w(merge style integration:cloud)
+task travis: %w(style integration)
 
 # Default
-task default: %w(merge style)
+task default: %w(style)
