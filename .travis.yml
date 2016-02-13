@@ -18,6 +18,8 @@ before_script:
 - bundle exec berks install
 script:
 - bundle exec rake travis
+after_script:
+- bundle exec rake integration:destroy
 after_failure:
 - echo "Kitchen-ec2 is using AWS spot pricing. The price may be too low!"
 

@@ -4,6 +4,7 @@ require 'bundler/setup'
 require 'knife_cookbook_doc/rake_task'
 require 'rubocop/rake_task'
 require 'foodcritic'
+require 'kitchen'
 
 namespace :style do
   desc 'Run Ruby style checks'
@@ -23,19 +24,34 @@ task :doc do
   end
 end
 
-desc 'Run Test Kitchen with cloud plugins'
-task :integration do
+namespace :integration do
   travis = ENV['TRAVIS'] == 'true'
   pull = ENV['TRAVIS_PULL_REQUEST'] != 'false'
   not_ignore = ENV['IGNORE_TEST_KITCHEN'] != 'true'
 
-  if travis && pull && not_ignore
-    `cp .kitchen.cloud.yml .kitchen.local.yml`
-    `kitchen test --destroy=always`
+  run_kitchen = travis && pull && not_ignore
+
+  desc 'Test the cookbook with test kitchen on EC2'
+  task :test do
+    if run_kitchen
+      `cp .kitchen.cloud.yml .kitchen.local.yml`
+
+      Kitchen.logger = Kitchen.default_file_logger
+      Kitchen::Config.new.instances.each do |instance|
+        instance.test(:always)
+      end
+    end
+  end
+
+  desc 'Destroy all cloud-based Test Kitchen nodes'
+  task :destroy do
+    if run_kitchen
+      Kitchen.logger = Kitchen.default_file_logger
+      Kitchen::Config.new.instances.each(&:destroy)
+    end
   end
 end
 
-task travis: %w(style integration)
+task travis: %w(style integration:test)
 
-# Default
 task default: %w(style)
