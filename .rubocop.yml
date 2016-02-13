@@ -4,5 +4,6 @@ AllCops:
     - 'build/**/*'
     - 'vendor/**/*'
     - 'bundle/**/*'
+    - 'deploy/**/*'
 EndOfLine:
   Enabled: false

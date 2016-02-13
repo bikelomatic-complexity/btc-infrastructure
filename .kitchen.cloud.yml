@@ -6,7 +6,7 @@ driver:
   price: <%= ENV['SPOT_PRICE_BID'] %>
   region: us-east-1
   security_group_ids: ["sg-dbfff1a2"] # Allow RDP and WinRM
-  user_data: .kitchen.cloud.bootstrap # Enable PowerShell
+  user_data: bootstrap.ps1 # Enable PowerShell
   tags:
     created_by: test_kitchen
 
@@ -21,19 +21,3 @@ platforms:
   - name: windows-2012r2
     driver:
       image_id: ami-9a0558f0
-
-suites:
-  - name: default
-    run_list:
-      - recipe[btc-infrastructure::default]
-      - recipe[btc-infrastructure::couchdb]
-      - recipe[btc-infrastructure::couchdb_bootstrap]
-    attributes:
-      admin_users:
-        - username: "admin_username"
-          password: "admin_password"
-  - name: nodejs
-    run_list:
-      - recipe[btc-infrastructure::default]
-      - recipe[btc-infrastructure::nodejs]
-      # - recipe[btc-infrastructure::nodejs_deploy]

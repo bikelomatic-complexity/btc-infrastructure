@@ -13,15 +13,17 @@ Configures Windows Server instances to run the Bicycle Touring Companion applica
 ## Cookbooks:
 
 * netsh_firewall (>= 0.3.2)
-* git (>= 4.3.7)
+* nssm (~> 1.2.0)
 
 # Attributes
 
 * `node['admin_users']` - Array of admin users as {:username, :password} hashes. Defaults to `[ ... ]`.
+* `node['server']['name']` -  Defaults to `btc-app-server`.
 
 # Recipes
 
 * btc-infrastructure::couchdb
+* btc-infrastructure::couchdb_bootstrap
 * btc-infrastructure::default
 * btc-infrastructure::nodejs
 * btc-infrastructure::nodejs_deploy
@@ -44,6 +46,9 @@ tests. While you develop, it will be useful to test the Chef code on a virtual
 instance of Windows Server 2012 R2. To do this, install both VirtualBox (a 4.x
 release) and vagrant. Then, add the [`mwrock/Windows2012R2` ](https://atlas.hashicorp.com/mwrock/boxes/Windows2012R2) box.
  - `$ vagrant box add mwrock/Windows2012R2`
+
+Before you do anything else: Run this, to generate the `.kitchen.yml`:
+ - `$ bundle exec rake merge`
 
 Then, you can issue these Test Kitchen commands:
 
