@@ -9,6 +9,7 @@ pkg/
 # Travis CI deploy
 cookbooks/
 ./deploy/
+*.tgz
 
 # Bundler
 bin/*
@@ -16,3 +17,4 @@ bin/*
 
 .kitchen/
 .kitchen.local.yml
+
