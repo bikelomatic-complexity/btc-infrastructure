@@ -1,0 +1,31 @@
+{
+  "app_source": {
+    "password": null,
+    "revision": null,
+    "ssh_key": null,
+    "type": "s3",
+    "url": "https://s3.amazonaws.com/btc-app-server/btc-app-server-latest.tgz",
+    "user": null
+  },
+  "attributes": {
+    "document_root": "es5/src/index.js"
+  },
+  "domains": [
+    "btc_app_server"
+  ],
+  "enable_ssl": false,
+  "environment": {
+    "NODE_ENV": "production",
+    "SERVER_SECRET": "SPjH9odCRnkRXH9J57SBtpPXeUxjikRa",
+    "SERVER_JWT_EXP": "20m"
+  },
+  "name": "btc-app-server",
+  "shortname": "btc_app_server",
+  "ssl_configuration": {
+    "certificate": null,
+    "private_key": null,
+    "chain": null
+  },
+  "type": "other",
+  "deploy": true
+}
