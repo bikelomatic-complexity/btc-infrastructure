@@ -40,7 +40,7 @@ if app && app['deploy'] == true
 
   # The app servers' directory in the global node_modules
   app_dir = File.join(node['nodejs']['npm']['home'], 'node_modules', app_name)
-  
+
   # We re-purpose the AWS OpsWorks App "document root" field to mean the
   # javascript file within the npm package to run, usualy `path/to/index.js`
   script = app['attributes']['document_root']
