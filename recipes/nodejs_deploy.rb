@@ -11,7 +11,7 @@ app_name = node['server']['name']
 
 app = search('aws_opsworks_app', "name:#{app_name}").first
 
-# Only deply if the incoming app name matches our expected app name
+# Only deploy if the incoming app name matches our expected app name
 if app && app['deploy'] == true
   # Install nssm, so we can wrap the app server in a Windows service
   include_recipe 'nssm'
@@ -39,7 +39,7 @@ if app && app['deploy'] == true
   end
 
   # The app servers' directory in the global node_modules
-  app_dir = File.join(ENV['AppData'], 'npm', 'node_modules', app_name)
+  app_dir = File.join(node['nodejs']['npm']['home'], 'node_modules', app_name)
 
   # We re-purpose the AWS OpsWorks App "document root" field to mean the
   # javascript file within the npm package to run, usualy `path/to/index.js`
@@ -65,27 +65,28 @@ if app && app['deploy'] == true
     action :install
   end
 
+  remote_file File.join(Chef::Config[:file_cache_path], "#{app_name}.tgz") do
+    source app['app_source']['url']
+    action :create
+  end
+
+  service 'Stop before update' do
+    service_name app_name
+    action :stop
+  end
+
   # Define the powershell script to install our app server tarball. However,
   # do nothing! If the tarball changes (below), it will notify us to install
   # the changes. In addition, when the install completes, run the service.
   powershell_script 'install_app' do
     code "npm install -g --loglevel error #{app_name}.tgz"
     cwd Chef::Config[:file_cache_path]
-    notifies :start, "service[#{app_name}]"
-    action :nothing
-  end
-
-  # When the app server tarball updates, stop the windows service, so we can
-  # then run the installer.
-  remote_file File.join(Chef::Config[:file_cache_path], "#{app_name}.tgz") do
-    source app['app_source']['url']
-    action :create
-    notifies :stop, "service[#{app_name}]"
-    notifies :run, 'powershell_script[install_app]'
+    action :run
   end
 
   # Ensure the service is enabled, so that it will start on boot
-  service app_name do
-    action :enable
+  service 'Start and enable' do
+    service_name app_name
+    action [:enable, :start]
   end
 end
