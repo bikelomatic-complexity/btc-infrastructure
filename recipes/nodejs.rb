@@ -1,16 +1,9 @@
 # Cookbook Name:: btc-infrastructure
 # Recipe:: nodejs
 #
-# Author:: Matt Waite
+# Author:: Steven Kroh
 #
 # Copyright 2016, Adventure Cycling Association
-
-=begin
-#<
-Installs Node.js, including npm. Git is also installed, at version
-`['git']['version']`
-#>
-=end
 
 installers = node['installers']['dir']
 
@@ -23,16 +16,24 @@ remote_file "#{installers}/#{node_msi}" do
   action :create
 end
 
-# Install Node.js to Program Files and update Path
-windows_package 'Node.js' do
+# Install Node.js to Program Files
+windows_package node['nodejs']['display_name'] do
   source "#{installers}/#{node_msi}"
   action :install
 end
 
-windows_path 'C:\\Program Files\\nodejs' do
-  action :add
+# Add Node's home directory to the Windows path, and to Ruby's ENV
+windows_path node['nodejs']['home'] do
+  action [:remove, :add]
 end
 
-windows_path '%AppData%\\npm' do
-  action :add
+# Ensure Npm's home directory is global, and avoid %AppData%
+powershell_script 'set_npm_prefix' do
+  code "npm config set prefix #{node['nodejs']['npm']['home']}"
+  action :run
+end
+
+# Add Npm's home directory to the Windows path, and to Ruby's ENV
+windows_path node['nodejs']['npm']['home'] do
+  action [:remove, :add]
 end

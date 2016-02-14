@@ -11,7 +11,7 @@ app_name = node['server']['name']
 
 app = search('aws_opsworks_app', "name:#{app_name}").first
 
-# Only deply if the incoming app name matches our expected app name
+# Only deploy if the incoming app name matches our expected app name
 if app && app['deploy'] == true
   # Install nssm, so we can wrap the app server in a Windows service
   include_recipe 'nssm'
