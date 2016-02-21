@@ -27,20 +27,8 @@ suites:
 - name: nodejs
   run_list:
     - recipe[btc-infrastructure::default]
+    - recipe[btc-infrastructure::git]
     - recipe[btc-infrastructure::nodejs]
     - recipe[btc-infrastructure::nodejs_deploy]
   data_bags_path: "test/integration/data_bags"
-  # attributes:
-  #   deploy:
-  #     btc-app-server:
-  #       application: btc-app-server
-  #       deploy_to: es5\src\index.js
-  #       scm:
-  #         password: null
-  #         repository: https://s3.amazonaws.com/btc-app-server/btc-app-server-latest.tgz
-  #         revision: null
-  #         scm_type: s3
-  #       environment_variables:
-  #         NODE_ENV: production
-  #         SERVER_SECRET: secret
-  #         SERVER_JWT_EXP: 20m
+  

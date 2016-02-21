@@ -25,6 +25,7 @@ Configures Windows Server instances to run the Bicycle Touring Companion applica
 * btc-infrastructure::couchdb
 * btc-infrastructure::couchdb_bootstrap
 * btc-infrastructure::default
+* btc-infrastructure::git
 * btc-infrastructure::nodejs
 * btc-infrastructure::nodejs_deploy
 
