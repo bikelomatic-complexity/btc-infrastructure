@@ -75,6 +75,18 @@ if app && app['deploy'] == true
     action :stop
   end
 
+  # powershell_script[install_app] depends on Git. We need to ensure Git
+  # is in Ruby's ENV['Path']
+  unless ENV['Path'].include? 'Git'
+    ENV['Path'] += ';' + File.join(node['git']['home'], 'bin')
+  end
+
+  # powershell_script[install_app] depends on Npm. We need to ensure Npm
+  # is in Ruby's ENV['Path'] (via Node.js install dir)
+  unless ENV['Path'].include? 'npm'
+    ENV['Path'] += ';' + (node['nodejs']['home'])
+  end
+
   # Define the powershell script to install our app server tarball. However,
   # do nothing! If the tarball changes (below), it will notify us to install
   # the changes. In addition, when the install completes, run the service.
