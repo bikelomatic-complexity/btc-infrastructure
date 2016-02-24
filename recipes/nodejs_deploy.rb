@@ -25,17 +25,17 @@ if app && app['deploy'] == true
     action :allow
   end
 
-  # Ensure the app server pulls the production configuration
-  env 'NODE_ENV' do
-    value app['environment']['NODE_ENV']
-  end
-
-  env 'SERVER_SECRET' do
-    value app['environment']['SERVER_SECRET']
-  end
-
-  env 'SERVER_JWT_EXP' do
-    value app['environment']['SERVER_JWT_EXP']
+  # Set all environment variables incoming from the app. These include, but
+  # are not limited to:
+  #  - NODE_ENV
+  #  - SERVER_SECRET
+  #  - SERVER_JWT_EXP
+  #  - SERVER_COUCH_USERNAME
+  #  - SERVER_COUCH_PASSWORD
+  app['environment'].each do |key, val|
+    env key do
+      value val
+    end
   end
 
   # The app servers' directory in the global node_modules
