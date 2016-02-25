@@ -4,7 +4,7 @@ DEPENDENCIES
     metadata: true
 
 GRAPH
-  btc-infrastructure (0.3.4)
+  btc-infrastructure (0.4.0)
     netsh_firewall (>= 0.3.2)
     nssm (~> 1.2.0)
   chef_handler (1.2.0)
