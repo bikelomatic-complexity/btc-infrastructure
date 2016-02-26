@@ -8,7 +8,7 @@
     "user": null
   },
   "attributes": {
-    "document_root": "es5/src/index.js"
+    "document_root": "lib/index.js"
   },
   "domains": [
     "btc_app_server"
