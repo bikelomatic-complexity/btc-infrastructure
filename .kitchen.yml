@@ -17,18 +17,18 @@ platforms:
 suites:
 - name: default
   run_list:
-    - recipe[btc-infrastructure::default]
-    - recipe[btc-infrastructure::couchdb]
-    - recipe[btc-infrastructure::couchdb_bootstrap]
+    - recipe[btc_infrastructure::default]
+    - recipe[btc_infrastructure::couchdb]
+    - recipe[btc_infrastructure::couchdb_bootstrap]
   attributes:
     admin_users:
       - username: "admin_username"
         password: "admin_password"
 - name: nodejs
   run_list:
-    - recipe[btc-infrastructure::default]
-    - recipe[btc-infrastructure::git]
-    - recipe[btc-infrastructure::nodejs]
-    - recipe[btc-infrastructure::nodejs_deploy]
+    - recipe[btc_infrastructure::default]
+    - recipe[btc_infrastructure::git]
+    - recipe[btc_infrastructure::nodejs]
+    - recipe[btc_infrastructure::nodejs_deploy]
   data_bags_path: "test/integration/data_bags"
   

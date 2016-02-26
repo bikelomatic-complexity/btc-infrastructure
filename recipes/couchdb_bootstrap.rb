@@ -11,7 +11,7 @@
 # >
 
 # We need nodejs to run couchdb-bootstrap: it's an npm module
-include_recipe 'btc-infrastructure::nodejs'
+include_recipe 'btc_infrastructure::nodejs'
 
 work = node['work']['dir']
 
