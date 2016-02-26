@@ -44,6 +44,8 @@ domain = false
 if stack_name.include? 'dev'
   instance = search('aws_opsworks_instance', "layer_ids:#{id_d}").first
   couch_domain = instance['private_ip'] if instance
+
+  instance = search('aws_opsworks_instance', 'self:true').first
   domain = instance['public_ip'] if instance
 # The production and staging stacks manage multiple database servers behind
 # an elastic load balancer. Connect by the ELB's dns name. Connect to the
