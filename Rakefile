@@ -52,6 +52,14 @@ namespace :integration do
   end
 end
 
+desc 'Build cookbooks-dev.tgz'
+task :build do
+  `rm -rf cookbooks`
+  `bundle exec berks vendor cookbooks`
+  `mkdir -p deploy`
+  `tar czf deploy/cookbooks.tgz -C cookbooks .`
+end
+
 task travis: %w(style integration:test)
 
 task default: %w(style)
