@@ -1,1 +1,37 @@
-.kitchen
+.gitignore
+.editorconfig
+.foodcritic
+.rubocop.yml
+Rakefile
+chefignore
+
+*~
+*#
+.#*
+\#*#
+.*.sw[a-z]
+*.un~
+pkg
+
+# Travis CI
+.travis.yml
+cookbooks
+deploy
+*.tgz
+
+# Bundler
+bin
+.bundle
+
+# Other
+doc
+
+# Kitchen
+.kitchen 
+.kitchen.yml
+.kitchen.cloud.yml
+.kitchen.local.yml
+bootstrap.ps1
+travis_ci_ec2.pem.enc
+test
+

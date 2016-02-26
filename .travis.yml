@@ -32,9 +32,7 @@ env:
 # `before_deploy` is fatal with >1 deploy providers. This `after_success` will
 # only package the cookbooks if we're running on a tagged commit
 after_success:
-- "[[ $TRAVIS_TAG != '' ]] && bundle exec berks vendor cookbooks"
-- "[[ $TRAVIS_TAG != '' ]] && mkdir deploy"
-- "[[ $TRAVIS_TAG != '' ]] && tar czf deploy/cookbooks.tgz -C cookbooks ."
+- bundle exec rake build
 
 deploy:
 - provider: releases

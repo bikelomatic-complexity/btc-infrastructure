@@ -1,4 +1,4 @@
-name             'btc-infrastructure'
+name             'btc_infrastructure'
 maintainer       'Adventure Cycling Association'
 maintainer_email 'sk.kroh@gmail.com'
 license          'AGPL v3'

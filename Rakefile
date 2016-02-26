@@ -54,9 +54,10 @@ end
 
 desc 'Build cookbooks-dev.tgz'
 task :build do
-  `bundle exec berks install`
+  `rm -rf cookbooks`
   `bundle exec berks vendor cookbooks`
-  `tar czf cookbooks-dev.tgz -C cookbooks .`
+  `mkdir deploy`
+  `tar czf deploy/cookbooks.tgz -C cookbooks .`
 end
 
 task travis: %w(style integration:test)

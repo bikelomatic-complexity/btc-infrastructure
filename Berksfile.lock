@@ -1,13 +1,13 @@
 DEPENDENCIES
-  btc-infrastructure
+  btc_infrastructure
     path: .
     metadata: true
 
 GRAPH
-  btc-infrastructure (0.4.0)
+  btc_infrastructure (0.4.0)
     netsh_firewall (>= 0.3.2)
     nssm (~> 1.2.0)
-  chef_handler (1.2.0)
+  chef_handler (1.3.0)
   netsh_firewall (0.3.2)
   nssm (1.2.0)
     windows (~> 1.0)
