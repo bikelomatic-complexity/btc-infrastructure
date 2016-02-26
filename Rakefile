@@ -56,7 +56,7 @@ desc 'Build cookbooks-dev.tgz'
 task :build do
   `rm -rf cookbooks`
   `bundle exec berks vendor cookbooks`
-  `mkdir deploy`
+  `mkdir -p deploy`
   `tar czf deploy/cookbooks.tgz -C cookbooks .`
 end
 
